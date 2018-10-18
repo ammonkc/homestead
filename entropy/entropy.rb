@@ -303,6 +303,7 @@ class Entropy
 
         # Add sites to hosts.dnsmasq
         config.vm.provision "shell" do |s|
+          s.name = 'Creating Dnsmasq records'
           s.path = entropy_dir + '/dnsmasq.sh'
           s.args = [settings['ip'], site['map']]
         end
