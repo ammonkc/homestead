@@ -518,6 +518,11 @@ class Entropy
       s.privileged = false
     end
 
+    # Enable .bash_aliases in oh-my-zsh
+    config.vm.provision 'shell' do |s|
+      s.path = entropy_dir + '/enable-aliases.sh'
+    end
+
     if settings.has_key?('backup') && settings['backup'] && (Vagrant::VERSION >= '2.1.0' || Vagrant.has_plugin?('vagrant-triggers'))
       dir_prefix = '/vagrant/'
       settings['databases'].each do |database|
