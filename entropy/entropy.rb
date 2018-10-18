@@ -216,7 +216,7 @@ class Entropy
         # Create SSL certificate
         config.vm.provision 'shell' do |s|
           s.name = 'Creating Certificate: ' + site['map']
-          s.path = script_dir + '/create-certificate.sh'
+          s.path = entropy_dir + '/create-certificate.sh'
           s.args = [site['map']]
         end
 
