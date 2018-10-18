@@ -16,6 +16,7 @@ class Entropy
     config.vm.box = settings['box'] ||= 'ammonkc/homestead'
     config.vm.box_version = settings['version'] ||= '>= 6.3.0'
     config.vm.hostname = settings['hostname'] ||= 'homestead'
+    webserver = settings['webserver'] ||= 'apache'
 
     # Configure A Private Network IP
     if settings['ip'] != 'autonetwork'
@@ -359,9 +360,16 @@ class Entropy
       s.inline = 'sudo systemctl restart cron'
     end
 
-    config.vm.provision 'shell' do |s|
-      s.name = 'Restarting Nginx'
-      s.inline = 'sudo systemctl restart nginx; sudo systemctl restart php56-php-fpm; sudo systemctl restart php70-php-fpm; sudo systemctl restart php71-php-fpm; sudo systemctl restart php72-php-fpm; sudo systemctl restart php73-php-fpm;'
+    if webserver == "apache"
+      config.vm.provision 'shell' do |s|
+        s.name = 'Restarting httpd'
+        s.inline = 'sudo systemctl stop nginx; sudo systemctl restart httpd; sudo systemctl restart php56-php-fpm; sudo systemctl restart php70-php-fpm; sudo systemctl restart php71-php-fpm; sudo systemctl restart php72-php-fpm; sudo systemctl restart php73-php-fpm;'
+      end
+    else
+      config.vm.provision 'shell' do |s|
+        s.name = 'Restarting Nginx'
+        s.inline = 'sudo systemctl stop httpd; sudo systemctl restart nginx; sudo systemctl restart php56-php-fpm; sudo systemctl restart php70-php-fpm; sudo systemctl restart php71-php-fpm; sudo systemctl restart php72-php-fpm; sudo systemctl restart php73-php-fpm;'
+      end
     end
 
     # Install CouchDB If Necessary
