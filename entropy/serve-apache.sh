@@ -29,12 +29,12 @@ block="<VirtualHost *:$3>
         AddHandler php"$php_version"-fcgi .php
         Action php"$php_version"-fcgi /php"$php_version"-fcgi
         Alias /php"$php_version"-fcgi /usr/lib/cgi-bin/php"$php_version"
-        FastCgiExternalServer /usr/lib/cgi-bin/php"$php_version" -socket /var/run/php/php"$php_version"-fpm.sock -pass-header Authorization
+        FastCgiExternalServer /usr/lib/cgi-bin/php"$php_version" -socket /var/opt/remi/php"$php_version"/run/php-fpm/php"$php_version"-fpm.sock -pass-header Authorization
     </IfModule>
     <IfModule !mod_fastcgi.c>
         <IfModule mod_proxy_fcgi.c>
             <FilesMatch \".+\.ph(ar|p|tml)$\">
-                SetHandler \"proxy:unix:/var/run/php/php"$php_version"-fpm.sock|fcgi://localhost/\"
+                SetHandler \"proxy:unix:/var/opt/remi/php"$php_version"/run/php-fpm/php"$php_version"-fpm.sock|fcgi://localhost/\"
             </FilesMatch>
         </IfModule>
     </IfModule>
@@ -106,12 +106,12 @@ blockssl="<IfModule mod_ssl.c>
             AddHandler php"$php_version"-fcgi .php
             Action php"$php_version"-fcgi /php"$php_version"-fcgi
             Alias /php"$php_version"-fcgi /usr/lib/cgi-bin/php"$php_version"
-            FastCgiExternalServer /usr/lib/cgi-bin/php"$php_version" -socket /var/run/php/php"$php_version"-fpm.sock -pass-header Authorization
+            FastCgiExternalServer /usr/lib/cgi-bin/php"$php_version" -socket /var/opt/remi/php"$php_version"/run/php-fpm/php"$php_version"-fpm.sock -pass-header Authorization
         </IfModule>
         <IfModule !mod_fastcgi.c>
             <IfModule mod_proxy_fcgi.c>
                 <FilesMatch \".+\.ph(ar|p|tml)$\">
-                    SetHandler \"proxy:unix:/var/run/php/php"$php_version"-fpm.sock|fcgi://localhost/\"
+                    SetHandler \"proxy:unix:/var/opt/remi/php"$php_version"/run/php-fpm/php"$php_version"-fpm.sock|fcgi://localhost/\"
                 </FilesMatch>
             </IfModule>
         </IfModule>
