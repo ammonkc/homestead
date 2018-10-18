@@ -14,6 +14,7 @@ customizationScriptPath = confDir + "/user-customizations.sh"
 aliasesPath = confDir + "/aliases"
 
 require File.expand_path(File.dirname(__FILE__) + '/scripts/homestead.rb')
+require File.expand_path(File.dirname(__FILE__) + '/entropy/entropy.rb')
 
 Vagrant.require_version '>= 2.1.0'
 
@@ -33,7 +34,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         abort "Homestead settings file not found in #{confDir}"
     end
 
-    Homestead.configure(config, settings)
+    if settings['box'] == 'ammonkc/homestead' then
+        Entropy.configure(config, settings)
+    else
+        Homestead.configure(config, settings)
+    end
 
     if File.exist? afterScriptPath then
         config.vm.provision "shell", path: afterScriptPath, privileged: false, keep_color: true
