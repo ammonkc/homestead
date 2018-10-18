@@ -16,7 +16,6 @@ class Entropy
     config.vm.box = settings['box'] ||= 'ammonkc/homestead'
     config.vm.box_version = settings['version'] ||= '>= 6.3.0'
     config.vm.hostname = settings['hostname'] ||= 'homestead'
-    config.vm.ostype = settings['ostype'] ||= 'RedHat_64'
 
     # Configure A Private Network IP
     if settings['ip'] != 'autonetwork'
@@ -39,7 +38,7 @@ class Entropy
       vb.customize ['modifyvm', :id, '--cpus', settings['cpus'] ||= '1']
       vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
       vb.customize ['modifyvm', :id, '--natdnshostresolver1', settings['natdnshostresolver'] ||= 'on']
-      vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
+      vb.customize ['modifyvm', :id, '--ostype', 'RedHat_64']
       if settings.has_key?('gui') && settings['gui']
         vb.gui = true
       end
@@ -56,7 +55,7 @@ class Entropy
         v.vmx['displayName'] = settings['name'] ||= 'homestead-7'
         v.vmx['memsize'] = settings['memory'] ||= 2048
         v.vmx['numvcpus'] = settings['cpus'] ||= 1
-        v.vmx['guestOS'] = 'ubuntu-64'
+        v.vmx['guestOS'] = 'centos-64'
         if settings.has_key?('gui') && settings['gui']
           v.gui = true
         end
