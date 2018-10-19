@@ -23,7 +23,7 @@ echo -e "
                              |_|    |___/
 
 ################################################
-Vagrant Box.......: $BOXNAME (v$BOXVERSION)
+Vagrant Box.......: $BOXNAME (v"$(echo $BOXVERSION | grep -o '[0-9.]*$')")
 hostname..........: `hostname`
 IP Address........: `/usr/sbin/ip addr show eth1 | grep 'inet ' | cut -f2 | awk '{print $2}'`
 OS Release........: `cat /etc/redhat-release`
@@ -35,12 +35,11 @@ PHP...............: `/usr/bin/php -v | grep cli | awk '{print $2}'`
 MySQL.............: `/usr/bin/mysql -V | awk '{print $5}' | tr -d ,`
 PostgreSQL........: `/usr/bin/psql --version | awk '{print $3}'`
 Redis.............: `/usr/bin/redis-server --version | awk '{print $3}' | grep -o '[0-9.]*$'`
-Node..............: `/usr/bin/node --version`
+Node..............: `/usr/bin/node --version | grep -o '[0-9.]*$'`
 Go................: `/usr/local/go/bin/go version | awk '{print $3}' | grep -o '[0-9.]*$'`
 Git...............: `/usr/local/git/bin/git --version | awk '{print $3}'`
 Composer..........: `/usr/local/bin/composer --version | awk '{print $3}'`
 WP-CLI............: `/usr/local/bin/wp --version --allow-root | awk '{print $2}'`
-Wkhtmltopdf.......: `/usr/local/bin/wkhtmltopdf --version | awk '{print $2}'`
 Configured Sites..:
 `cat /etc/hosts.dnsmasq`
 ################################################
