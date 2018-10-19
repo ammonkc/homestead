@@ -2,7 +2,7 @@
 
 BOXNAME=$1
 BOXVERSION=$2
-COMPOSER_ALLOW_SUPERUSER=1
+export COMPOSER_ALLOW_SUPERUSER=1
 
 echo 'Welcome to your Entropy virtual machine.' > /etc/motd
 
