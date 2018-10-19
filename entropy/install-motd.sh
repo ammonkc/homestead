@@ -32,6 +32,9 @@ Apache............: `/usr/sbin/httpd -v | grep 'Server version' | awk '{print $3
 PHP...............: `/usr/bin/php -v | grep cli | awk '{print $2}'`
 MySQL.............: `/usr/bin/mysql -V | awk '{print $5}' | tr -d ,`
 PostgreSQL........: `/usr/bin/psql --version | awk '{print $3}'`
+Node..............: `/usr/bin/node --version`
+Git...............: `/usr/bin/git --version | awk '{print $3}'`
+Composer..........: `/usr/local/bin/composer --version | awk '{print $3}'`
 Wkhtmltopdf.......: `/usr/local/bin/wkhtmltopdf --version | awk '{print $2}'`
 Configured Sites..:
 `cat /etc/hosts.dnsmasq`
