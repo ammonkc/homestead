@@ -520,8 +520,8 @@ class Entropy
 
     # Enable .bash_aliases in oh-my-zsh
     config.vm.provision 'shell' do |s|
-      s.name = 'Enable aliases in oh-my-zsh'
-      s.path = entropy_dir + '/enable-aliases.sh'
+      s.name = 'fix aliases in oh-my-zsh'
+      s.path = entropy_dir + '/fix-aliases.sh'
     end
 
     # Enable .bash_aliases in oh-my-zsh
