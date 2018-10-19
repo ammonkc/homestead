@@ -2,6 +2,7 @@
 
 BOXNAME=$1
 BOXVERSION=$2
+COMPOSER_ALLOW_SUPERUSER=1
 
 echo 'Welcome to your Entropy virtual machine.' > /etc/motd
 
@@ -38,7 +39,7 @@ Node..............: `/usr/bin/node --version`
 Go................: `/usr/local/go/bin/go version | awk '{print $3}' | grep -o '[0-9.]*$'`
 Git...............: `/usr/local/git/bin/git --version | awk '{print $3}'`
 Composer..........: `/usr/local/bin/composer --version | awk '{print $3}'`
-WP-CLI............: `/usr/local/bin/wp --version | awk '{print $2}'`
+WP-CLI............: `/usr/local/bin/wp --version --allow-root | awk '{print $2}'`
 Wkhtmltopdf.......: `/usr/local/bin/wkhtmltopdf --version | awk '{print $2}'`
 Configured Sites..:
 `cat /etc/hosts.dnsmasq`
