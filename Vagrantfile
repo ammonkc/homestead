@@ -36,9 +36,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     if settings['box'] == 'ammonkc/homestead' then
         Entropy.configure(config, settings)
-        config.vm.provision "shell" do |s|
-            s.inline = "sed -i 's/if [[ \"$1\" && \"$2\" ]]/if [[ -n \"$1\" && -n \"$2\" ]]/' /home/vagrant/.bash_aliases"
-        end
     else
         Homestead.configure(config, settings)
     end
