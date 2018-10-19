@@ -29,12 +29,12 @@ OS Release........: `cat /etc/redhat-release`
 kernel............: `uname -r`
 User..............: `whoami`
 Apache............: `/usr/sbin/httpd -v | grep 'Server version' | awk '{print $3}' | tr -d Apache/`
-Nginx.............: `/usr/bin/nginx -v`
+Nginx.............: `/usr/sbin/nginx -v`
 PHP...............: `/usr/bin/php -v | grep cli | awk '{print $2}'`
 MySQL.............: `/usr/bin/mysql -V | awk '{print $5}' | tr -d ,`
 PostgreSQL........: `/usr/bin/psql --version | awk '{print $3}'`
 Node..............: `/usr/bin/node --version`
-Git...............: `/usr/bin/git --version | awk '{print $3}'`
+Git...............: `/usr/local/git/bin/git --version | awk '{print $3}'`
 Composer..........: `/usr/local/bin/composer --version | awk '{print $3}'`
 Wkhtmltopdf.......: `/usr/local/bin/wkhtmltopdf --version | awk '{print $2}'`
 Configured Sites..:
