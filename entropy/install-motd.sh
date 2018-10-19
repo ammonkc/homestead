@@ -29,13 +29,16 @@ OS Release........: `cat /etc/redhat-release`
 kernel............: `uname -r`
 User..............: `whoami`
 Apache............: `/usr/sbin/httpd -v | grep 'Server version' | awk '{print $3}' | tr -d Apache/`
-Nginx.............: `/usr/sbin/nginx -v`
+Nginx.............: `echo -e "$(/usr/sbin/nginx -v 2>&1)" | grep -o '[0-9.]*$'`
 PHP...............: `/usr/bin/php -v | grep cli | awk '{print $2}'`
 MySQL.............: `/usr/bin/mysql -V | awk '{print $5}' | tr -d ,`
 PostgreSQL........: `/usr/bin/psql --version | awk '{print $3}'`
+Redis.............: `/usr/bin/redis-server --version | awk '{print $3}' | grep -o '[0-9.]*$'`
 Node..............: `/usr/bin/node --version`
+Go................: `/usr/local/go/bin/go version | awk '{print $3}' | grep -o '[0-9.]*$'`
 Git...............: `/usr/local/git/bin/git --version | awk '{print $3}'`
 Composer..........: `/usr/local/bin/composer --version | awk '{print $3}'`
+WP-CLI............: `/usr/local/bin/wp --version | awk '{print $2}'`
 Wkhtmltopdf.......: `/usr/local/bin/wkhtmltopdf --version | awk '{print $2}'`
 Configured Sites..:
 `cat /etc/hosts.dnsmasq`
