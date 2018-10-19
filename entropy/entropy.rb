@@ -524,6 +524,13 @@ class Entropy
       s.path = entropy_dir + '/enable-aliases.sh'
     end
 
+    # Enable .bash_aliases in oh-my-zsh
+    config.vm.provision 'shell' do |s|
+      s.name = 'Setup MOTD'
+      s.path = entropy_dir + '/install-motd.sh'
+      s.args = [settings['box'], settings['box_version']]
+    end
+
     if settings.has_key?('backup') && settings['backup'] && (Vagrant::VERSION >= '2.1.0' || Vagrant.has_plugin?('vagrant-triggers'))
       dir_prefix = '/vagrant/'
       settings['databases'].each do |database|
