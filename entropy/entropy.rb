@@ -528,7 +528,7 @@ class Entropy
     config.vm.provision 'shell' do |s|
       s.name = 'Setup MOTD'
       s.path = entropy_dir + '/install-motd.sh'
-      s.args = [settings['box'], settings['box_version']]
+      s.args = [settings['box'], settings['version']]
     end
 
     if settings.has_key?('backup') && settings['backup'] && (Vagrant::VERSION >= '2.1.0' || Vagrant.has_plugin?('vagrant-triggers'))
