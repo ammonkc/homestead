@@ -29,6 +29,7 @@ OS Release........: `cat /etc/redhat-release`
 kernel............: `uname -r`
 User..............: `whoami`
 Apache............: `/usr/sbin/httpd -v | grep 'Server version' | awk '{print $3}' | tr -d Apache/`
+Nginx.............: `/usr/bin/nginx -v`
 PHP...............: `/usr/bin/php -v | grep cli | awk '{print $2}'`
 MySQL.............: `/usr/bin/mysql -V | awk '{print $5}' | tr -d ,`
 PostgreSQL........: `/usr/bin/psql --version | awk '{print $3}'`
