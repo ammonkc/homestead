@@ -29,6 +29,7 @@ IP Address........: `/usr/sbin/ip addr show eth1 | grep 'inet ' | cut -f2 | awk 
 OS Release........: `cat /etc/redhat-release`
 kernel............: `uname -r`
 User..............: `whoami`
+################################################
 Apache............: `/usr/sbin/httpd -v | grep 'Server version' | awk '{print $3}' | tr -d Apache/`
 Nginx.............: `echo -e "$(/usr/sbin/nginx -v 2>&1)" | grep -o '[0-9.]*$'`
 PHP...............: `/usr/bin/php -v | grep cli | awk '{print $2}'`
@@ -44,6 +45,7 @@ Git...............: `/usr/local/git/bin/git --version | awk '{print $3}'`
 Composer..........: `/usr/local/bin/composer --version | awk '{print $3}'`
 WP-CLI............: `/usr/local/bin/wp --version --allow-root | awk '{print $2}'`
 Ngrok.............: `/usr/local/bin/ngrok --version | awk '{print $3}'`
+################################################
 Configured Sites..:
 `cat /etc/hosts.dnsmasq`
 ################################################
