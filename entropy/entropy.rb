@@ -372,6 +372,11 @@ class Entropy
       end
     end
 
+    config.vm.provision 'shell' do |s|
+      s.name = 'Restarting Dnsmasq'
+      s.inline = 'sudo systemctl restart dnsmasq'
+    end
+
     # Install CouchDB If Necessary
     if settings.has_key?('couchdb') && settings['couchdb']
       config.vm.provision 'shell' do |s|

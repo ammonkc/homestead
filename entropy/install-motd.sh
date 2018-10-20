@@ -37,6 +37,7 @@ PostgreSQL........: `/usr/bin/psql --version | awk '{print $3}'`
 Redis.............: `/usr/bin/redis-server --version | awk '{print $3}' | grep -o '[0-9.]*$'`
 Node..............: `/usr/bin/node --version | grep -o '[0-9.]*$'`
 Go................: `/usr/local/go/bin/go version | awk '{print $3}' | grep -o '[0-9.]*$'`
+Dnsmasq...........: `/usr/sbin/dnsmasq --version | grep "Dnsmasq version" | awk '{print $3}'`
 Supervisor........: `/usr/bin/supervisord --version`
 Beanstalk.........: `/usr/bin/beanstalkd -v | grep -o '[0-9.]*$'`
 Git...............: `/usr/local/git/bin/git --version | awk '{print $3}'`
