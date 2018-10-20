@@ -12,7 +12,7 @@ class Entropy
     config.ssh.forward_agent = true
 
     # Configure The Box
-    config.vm.define settings['name'] ||= 'homestead-7'
+    config.vm.define settings['name'] ||= 'homestead-co7'
     config.vm.box = settings['box'] ||= 'ammonkc/homestead'
     config.vm.box_version = settings['version'] ||= '>= 6.3.0'
     config.vm.hostname = settings['hostname'] ||= 'homestead'
