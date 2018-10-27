@@ -209,6 +209,7 @@ class Entropy
 
     config.vm.provision 'shell' do |s|
       s.path = entropy_dir + '/clear-dnsmasq.sh'
+      s.args = [settings['ip']]
     end
 
     if settings.include? 'sites'
