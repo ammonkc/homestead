@@ -10,6 +10,11 @@ class Homestead
     # Allow SSH Agent Forward from The Box
     config.ssh.forward_agent = true
 
+    # Configure Verify Host Key
+    if settings.has_key?('verify_host_key')
+      config.ssh.verify_host_key = settings['verify_host_key']
+    end
+
     # Configure The Box
     config.vm.define settings['name'] ||= 'homestead-7'
     config.vm.box = settings['box'] ||= 'laravel/homestead'
@@ -143,7 +148,7 @@ class Homestead
             s.args = [File.read(File.expand_path(key)), key.split('/').last]
           end
         else
-          puts 'Check your Homestead.yaml file, the path to your private key does not exist.'
+          puts 'Check your Homestead.yaml (or Homestead.json) file, the path to your private key does not exist.'
           exit
         end
       end
@@ -173,10 +178,12 @@ class Homestead
             mount_opts = folder['mount_options'] ? folder['mount_options'] : ['actimeo=1', 'nolock']
           elsif folder['type'] == 'smb'
             mount_opts = folder['mount_options'] ? folder['mount_options'] : ['vers=3.02', 'mfsymlinks']
+
+            smb_creds = {'smb_host': folder['smb_host'], 'smb_username': folder['smb_username'], 'smb_password': folder['smb_password']}
           end
 
           # For b/w compatibility keep separate 'mount_opts', but merge with options
-          options = (folder['options'] || {}).merge({ mount_options: mount_opts })
+          options = (folder['options'] || {}).merge({ mount_options: mount_opts }).merge(smb_creds || {})
 
           # Double-splat (**) operator only works with symbol keys, so convert
           options.keys.each{|k| options[k.to_sym] = options.delete(k) }
@@ -201,6 +208,9 @@ class Homestead
     end
 
     if settings.include? 'sites'
+      socket = { 'map' => 'socket-wrench.test', 'to' => '/var/www/socket-wrench/public' }
+      settings['sites'].unshift(socket)
+
       settings['sites'].each do |site|
 
         # Create SSL certificate
@@ -261,7 +271,7 @@ class Homestead
             end
           else
             config.vm.provision 'shell' do |s|
-              s.inline = 'rm -rf ' + site['to'] + '/ZendServer'
+              s.inline = 'rm -rf ' + site['to'].to_s + '/ZendServer'
             end
           end
         end
@@ -380,6 +390,13 @@ class Homestead
       end
     end
 
+    # Install MySQL 8 If Necessary
+    if settings.has_key?('mysql8') && settings['mysql8']
+        config.vm.provision 'shell' do |s|
+            s.path = script_dir + '/install-mysql8.sh'
+        end
+    end
+
     # Install Neo4j If Necessary
     if settings.has_key?('neo4j') && settings['neo4j']
       config.vm.provision 'shell' do |s|
@@ -397,6 +414,8 @@ class Homestead
 
     # Configure All Of The Configured Databases
     if settings.has_key?('databases')
+      settings['databases'].unshift('socket_wrench')
+
       settings['databases'].each do |db|
         config.vm.provision 'shell' do |s|
           s.name = 'Creating MySQL Database: ' + db
@@ -455,6 +474,7 @@ class Homestead
       end
     end
 
+
     # Install chronograf if Necessary
     if settings.has_key?('chronograf') && settings['chronograf']
       config.vm.provision 'shell' do |s|
@@ -487,6 +507,11 @@ class Homestead
       s.path = script_dir + '/create-ngrok.sh'
       s.args = [settings['ip']]
       s.privileged = false
+    end
+
+    config.vm.provision 'shell' do |s|
+        s.name = 'Update motd'
+        s.inline = 'sudo service motd-news restart'
     end
 
     if settings.has_key?('backup') && settings['backup'] && (Vagrant::VERSION >= '2.1.0' || Vagrant.has_plugin?('vagrant-triggers'))
