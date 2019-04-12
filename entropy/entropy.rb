@@ -397,11 +397,6 @@ class Entropy
       s.inline = 'sudo systemctl restart supervisord'
     end
 
-    config.vm.provision 'shell' do |s|
-      s.name = 'Update Supervisord'
-      s.inline = 'sudo supervisorctl update'
-    end
-
     # Install CouchDB If Necessary
     if settings.has_key?('couchdb') && settings['couchdb']
       config.vm.provision 'shell' do |s|
