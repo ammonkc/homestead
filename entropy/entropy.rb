@@ -212,6 +212,11 @@ class Entropy
       s.args = [settings['ip']]
     end
 
+    config.vm.provision 'shell' do |s|
+      s.path = entropy_dir + '/clear-horizon.sh'
+      s.args = [settings['ip']]
+    end
+
     if settings.include? 'sites'
       settings['sites'].each do |site|
 
@@ -305,9 +310,18 @@ class Entropy
 
         # Add sites to hosts.dnsmasq
         config.vm.provision "shell" do |s|
-          s.name = 'Creating Dnsmasq records'
+          s.name = 'Creating Dnsmasq record'
           s.path = entropy_dir + '/dnsmasq.sh'
           s.args = [settings['ip'], site['map']]
+        end
+
+        # Add Horizon supervisord programs
+        if site.has_key?('horizon') && site['horizon']
+          config.vm.provision "shell" do |s|
+            s.name = 'Creating Supervisord horizon program'
+            s.path = entropy_dir + '/horizon.sh'
+            s.args = [site['map'].tr('^A-Za-z0-9', ''), site['to']]
+          end
         end
       end
     end
@@ -376,6 +390,16 @@ class Entropy
     config.vm.provision 'shell' do |s|
       s.name = 'Restarting Dnsmasq'
       s.inline = 'sudo systemctl restart dnsmasq'
+    end
+
+    config.vm.provision 'shell' do |s|
+      s.name = 'Restarting Supervisord'
+      s.inline = 'sudo systemctl restart supervisord'
+    end
+
+    config.vm.provision 'shell' do |s|
+      s.name = 'Update Supervisord'
+      s.inline = 'sudo supervisorctl update'
     end
 
     # Install CouchDB If Necessary
