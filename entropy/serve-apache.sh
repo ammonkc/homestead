@@ -21,6 +21,13 @@ block="<VirtualHost *:$3>
     DocumentRoot "$2"
     $paramsTXT
 
+    # Handle Authorization Header
+    <IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    </IfModule>
+
     <Directory "$2">
         AllowOverride All
         Require all granted
@@ -60,6 +67,13 @@ blockssl="<IfModule mod_ssl.c>
         ServerAlias www.$1
         DocumentRoot "$2"
         $paramsTXT
+
+        # Handle Authorization Header
+        <IfModule mod_rewrite.c>
+        RewriteEngine on
+        RewriteCond %{HTTP:Authorization} .
+        RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+        </IfModule>
 
         <Directory "$2">
             AllowOverride All
